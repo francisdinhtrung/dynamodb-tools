@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListTables",
+      "Effect": "Allow",
+      "Action": ["dynamodb:ListTables"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadSelectedTables",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:DescribeTable",
+        "dynamodb:DescribeTimeToLive",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:REGION:ACCOUNT_ID:table/app-dev-*",
+        "arn:aws:dynamodb:REGION:ACCOUNT_ID:table/app-dev-*/index/*"
+      ]
+    }
+  ]
+}

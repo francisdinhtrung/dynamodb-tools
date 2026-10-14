@@ -1,0 +1,23 @@
+{
+  "name": "dynamodb-tools",
+  "version": "0.1.0",
+  "description": "Read-only DynamoDB CLI designed for AI coding agents (Copilot, Claude Code, Cursor...)",
+  "type": "module",
+  "bin": {
+    "ddb": "bin/ddb.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "local:up": "docker compose up -d dynamodb-local",
+    "local:down": "docker compose down",
+    "local:seed": "DDB_ENDPOINT_URL=http://localhost:8000 node scripts/seed-local.js",
+    "test:local": "DDB_ENDPOINT_URL=http://localhost:8000 node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.700.0",
+    "@aws-sdk/util-dynamodb": "^3.700.0"
+  }
+}
