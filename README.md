@@ -5,11 +5,26 @@ and humans. No MCP needed: the agent runs `ddb` in the terminal and reads JSON o
 
 ## Install
 
+**macOS / Linux / WSL (terminal):**
+
 ```bash
-npm install
-npm link            # makes `ddb` available globally
-ddb --help
+curl -fsSL https://raw.githubusercontent.com/francisdinhtrung/dynamodb-tools/main/install.sh | bash
 ```
+
+**Windows (PowerShell):**
+
+```powershell
+irm https://raw.githubusercontent.com/francisdinhtrung/dynamodb-tools/main/install.ps1 | iex
+```
+
+Requires git and Node.js >= 22. The installer clones to `~/.dynamodb-tools`, puts `ddb` on your PATH
+(`~/.local/bin/ddb` or `%USERPROFILE%\.dynamodb-tools-bin\ddb.cmd`) and installs the agent skill to
+`~/.copilot/skills/dynamodb`. Run it again to update.
+
+Options: `--no-skill`, `--claude-skill` (also `~/.claude/skills`), `--uninstall`
+(PowerShell: download `install.ps1`, then `.\install.ps1 -NoSkill | -ClaudeSkill | -Uninstall`).
+
+From a clone instead: `npm install && npm link`.
 
 ## Commands
 
