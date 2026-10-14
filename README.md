@@ -26,6 +26,36 @@ Options: `--no-skill`, `--claude-skill` (also `~/.claude/skills`), `--uninstall`
 
 From a clone instead: `npm install && npm link`.
 
+## Standalone executable (no Node, no install)
+
+Download the file for your OS from [Releases](https://github.com/francisdinhtrung/dynamodb-tools/releases),
+rename it to `ddb` (`ddb.exe` on Windows) and put it anywhere, ideally in a folder on PATH.
+
+| OS | File |
+|---|---|
+| Windows x64 | `ddb-windows-x64.exe` |
+| macOS Apple Silicon | `ddb-macos-arm64` |
+| macOS Intel | `ddb-macos-x64` |
+| Linux x64 / arm64 | `ddb-linux-x64` / `ddb-linux-arm64` |
+
+```bash
+# macOS / Linux
+chmod +x ddb-macos-arm64 && mv ddb-macos-arm64 ddb
+xattr -d com.apple.quarantine ddb 2>/dev/null   # macOS: allow unsigned binary
+./ddb --help
+```
+
+```powershell
+# Windows: if SmartScreen warns, choose "More info" > "Run anyway", or:
+Unblock-File .\ddb.exe
+.\ddb.exe --help
+```
+
+For the agent skill, copy `.github/skills/dynamodb/` to `~/.copilot/skills/dynamodb/`
+(Windows: `%USERPROFILE%\.copilot\skills\dynamodb\`). If `ddb` is not on PATH, edit the skill to use the full path.
+
+Build yourself (needs Deno 2.x + Node): `npm ci && npm run build` produces `dist/` for all platforms.
+
 ## Commands
 
 ```bash

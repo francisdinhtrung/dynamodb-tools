@@ -14,7 +14,8 @@
     "local:up": "docker compose up -d dynamodb-local",
     "local:down": "docker compose down",
     "local:seed": "node --env-file=.env.local scripts/seed-local.js",
-    "test:local": "node --env-file=.env.local --test \"test/*.test.js\""
+    "test:local": "node --env-file=.env.local --test \"test/*.test.js\"",
+    "build": "node scripts/build.js"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.700.0",
