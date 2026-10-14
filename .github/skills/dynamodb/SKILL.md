@@ -14,7 +14,7 @@ description: Inspect DynamoDB tables and data (read-only) with the `ddb` CLI. Us
 2. **Always describe before reading data**: `ddb describe <table>` gives pk/sk names and types, GSIs, LSIs, TTL.
 3. Understand the data shape: `ddb sample <table> -n 5`
 4. Read precisely, cheapest first:
-   - One item: `ddb get <table> --key '{"pk":"USER#1","sk":"PROFILE"}'`
+   - One item: `ddb get <table> --key pk=USER#1,sk=PROFILE`
    - One partition: `ddb query <table> --pk USER#1 --sk-begins ORDER# --limit 20`
    - Via index: `ddb query <table> --index GSI1 --pk EMAIL#a@b.com`
    - Newest first: add `--desc`

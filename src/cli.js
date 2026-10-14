@@ -8,7 +8,8 @@ export const HELP = `ddb - read-only DynamoDB CLI for humans and AI agents. Outp
 USAGE
   ddb list-tables [--limit N] [--next-token T]
   ddb describe <table>
-  ddb get <table> --key '{"pk":"USER#1","sk":"PROFILE"}' [--projection a,b] [--consistent]
+  ddb get <table> --key pk=USER#1,sk=PROFILE [--projection a,b] [--consistent]
+                  (--key also accepts JSON: '{"pk":"USER#1","sk":"PROFILE"}')
   ddb query <table> --pk <value> [sort-key condition] [--index NAME] [--desc]
                     [--limit N] [--next-token T] [--projection a,b] [--consistent]
   ddb scan <table> [--index NAME] [--limit N] [--next-token T] [--projection a,b]

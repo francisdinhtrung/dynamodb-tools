@@ -82,17 +82,33 @@ export async function describe(client, table) {
 }
 
 export async function get(client, table, opts) {
-  if (!opts.key) throw new UsageError('get requires --key \'{"pk":"...","sk":"..."}\'');
+  if (!opts.key) throw new UsageError('get requires --key pk=VALUE[,sk=VALUE] or --key \'{"pk":"...","sk":"..."}\'');
   let key;
-  try {
-    key = JSON.parse(opts.key);
-  } catch {
-    throw new UsageError('--key must be valid JSON');
+  if (opts.key.trim().startsWith('{')) {
+    try {
+      key = marshall(JSON.parse(opts.key));
+    } catch {
+      throw new UsageError('--key must be valid JSON');
+    }
+  } else {
+    // name=value pairs; types come from the table schema. Shell-friendly (no JSON quoting in PowerShell/cmd).
+    const t = await describeRaw(client, table);
+    const typeOf = (name) => t.AttributeDefinitions.find((a) => a.AttributeName === name)?.AttributeType;
+    key = {};
+    for (const pair of opts.key.split(',')) {
+      const eq = pair.indexOf('=');
+      if (eq < 1) throw new UsageError(`Invalid --key part "${pair}", expected name=value`);
+      const name = pair.slice(0, eq).trim();
+      if (!t.KeySchema.some((k) => k.AttributeName === name)) {
+        throw new UsageError(`"${name}" is not a key attribute of "${table}"`);
+      }
+      key[name] = keyValue(pair.slice(eq + 1), typeOf(name), name);
+    }
   }
   const res = await client.send(
     new GetItemCommand({
       TableName: table,
-      Key: marshall(key),
+      Key: key,
       ConsistentRead: !!opts.consistent,
       ...projection(opts.projection),
     }),

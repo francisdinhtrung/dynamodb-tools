@@ -16,7 +16,7 @@ ddb --help
 ```bash
 ddb list-tables
 ddb describe <table>
-ddb get <table> --key '{"pk":"USER#1","sk":"PROFILE"}'
+ddb get <table> --key pk=USER#1,sk=PROFILE
 ddb query <table> --pk USER#1 --sk-begins ORDER# --desc --limit 10
 ddb query <table> --index GSI1 --pk EMAIL#a@b.com
 ddb scan <table> --limit 20 --projection pk,sk,status

@@ -31,6 +31,10 @@ test('describe resolves keys and GSI', { skip }, async () => {
 test('get item', { skip }, async () => {
   const { json } = await ddb('get', TABLE, '--key', '{"pk":"USER#1","sk":"PROFILE"}');
   assert.equal(json.item.name, 'An');
+  const kv = await ddb('get', TABLE, '--key', 'pk=USER#1,sk=PROFILE');
+  assert.equal(kv.json.item.name, 'An');
+  const bad = await ddb('get', TABLE, '--key', 'nope=1');
+  assert.equal(bad.code, 2);
 });
 
 test('query with begins_with, desc, pagination', { skip }, async () => {

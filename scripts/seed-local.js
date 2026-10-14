@@ -1,6 +1,7 @@
 // Creates a demo single-table-design table in DynamoDB Local. Usage: npm run local:seed
 import { CreateTableCommand, PutItemCommand, DeleteTableCommand } from '@aws-sdk/client-dynamodb';
 import { marshall } from '@aws-sdk/util-dynamodb';
+import { pathToFileURL } from 'node:url';
 import { makeClient } from '../src/cli.js';
 
 export const TABLE = 'demo-app';
@@ -48,7 +49,7 @@ export async function seed(client = makeClient({})) {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   await seed();
   console.log(`Seeded table "${TABLE}" with ${ITEMS.length} items`);
 }
